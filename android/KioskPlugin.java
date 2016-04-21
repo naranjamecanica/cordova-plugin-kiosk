@@ -16,12 +16,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import jk.cordova.plugin.kiosk.KioskActivity;
 import org.json.JSONObject;
+import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
 
 public class KioskPlugin extends CordovaPlugin {
     
     public static final String EXIT_KIOSK = "exitKiosk";
     
     public static final String IS_IN_KIOSK = "isInKiosk";
+
+    private static final String PREF_KIOSK_MODE = "pref_kiosk_mode";
+
     
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -35,8 +40,10 @@ public class KioskPlugin extends CordovaPlugin {
                 
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
-                
-                Intent chooser = Intent.createChooser(intent, "Select destination...");                
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
+                sp.edit().putBoolean(PREF_KIOSK_MODE, false).commit();
+
+                Intent chooser = Intent.createChooser(intent, "Select destination...");
                 if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
                     cordova.getActivity().startActivity(chooser);
                 }
