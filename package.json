@@ -1,0 +1,17 @@
+{
+    "name": "cordova-plugin-kiosk",
+    "version": "0.2.0",
+    "description": "Cordova Kiosk Mode Plugin",
+    "cordova": {
+        "id": "cordova-plugin-kiosk",
+        "platforms": [
+            "android"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/babbellab/cordova-plugin-kiosk"
+    },
+    "keywords": ["cordova", "launcher", "homescreen", "kiosk", "kiosk mode"],
+    "license": "Apache-2.0"
+}
