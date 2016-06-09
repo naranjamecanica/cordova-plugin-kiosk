@@ -147,6 +147,11 @@ public class KioskActivity extends CordovaActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        recreate();
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
@@ -181,4 +186,3 @@ public class KioskActivity extends CordovaActivity {
         }
     }
 }
-
