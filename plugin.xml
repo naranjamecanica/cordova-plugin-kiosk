@@ -41,6 +41,7 @@
             <uses-permission android:name="android.permission.REORDER_TASKS" />
             <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
             <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:label="Kiosk app" android:launchMode="singleTop" android:keepScreenOn="true" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" android:windowSoftInputMode="adjustResize" android:name="jk.cordova.plugin.kiosk.KioskActivity">
@@ -54,6 +55,7 @@
 
         <source-file src="src/android/jk/cordova/plugin/kiosk/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="src/android/jk/cordova/plugin/kiosk/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="src/android/jk/cordova/plugin/kiosk/OnScreenOffReceiver.java" target-dir="src/jk/cordova/plugin/kiosk" />
 
     </platform>
 

@@ -22,6 +22,9 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import android.os.PowerManager;
+import android.content.IntentFilter;
+
 import java.lang.reflect.Method;
 
 public class KioskActivity extends CordovaActivity {
@@ -32,6 +35,9 @@ public class KioskActivity extends CordovaActivity {
     Object statusBarService;
     ActivityManager am;
     String TAG = "KioskActivity";
+
+    private PowerManager.WakeLock wakeLock;
+    private OnScreenOffReceiver onScreenOffReceiver;
 
     protected void onStart() {
         super.onStart();
@@ -98,10 +104,28 @@ public class KioskActivity extends CordovaActivity {
     }
 
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        registerKioskModeScreenOffReceiver();
         super.onCreate(savedInstanceState);
         super.init();
         loadUrl(launchUrl);
     }
+
+    private void registerKioskModeScreenOffReceiver() {
+        // register screen off receiver
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+        onScreenOffReceiver = new OnScreenOffReceiver();
+        registerReceiver(onScreenOffReceiver, filter);
+      }
+
+      public PowerManager.WakeLock getWakeLock() {
+        if(wakeLock == null) {
+          // lazy loading: first call, create wakeLock via PowerManager.
+          PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+          wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "wakeup");
+        }
+        return wakeLock;
+      }
 
     private void collapseNotifications()
     {
